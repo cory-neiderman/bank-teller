@@ -81,6 +81,24 @@ public class DollarAmountTest {
 			System.out.println("FAIL.  negativeAmount should be negative but is not.");
 		}
 		
+		DollarAmount testAmount = new DollarAmount(950);
+		DollarAmount testAmount2 = new DollarAmount(540);
+		if(testAmount.compareTo(testAmount2)!=1){
+			allTestsPassed = false;
+			System.out.println("FAIL.  Should return 1, but instead returns "+testAmount.compareTo(testAmount2));
+		}
+		if(testAmount2.compareTo(testAmount)!=-1){
+			allTestsPassed = false;
+			System.out.println("FAIL.  Should return -1, but instead returns "+testAmount2.compareTo(testAmount));
+		}
+		
+		DollarAmount equalTestAmount = new DollarAmount(950);
+		if(testAmount.compareTo(equalTestAmount)!=0){
+			allTestsPassed = false;
+			System.out.println("FAIL.  Should return 0, but instead returns "+testAmount.compareTo(equalTestAmount));
+		}
+		
+		
 		if(allTestsPassed) {
 			System.out.println("All tests PASSED!");
 		}

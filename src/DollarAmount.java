@@ -1,5 +1,5 @@
 
-public class DollarAmount {
+public class DollarAmount implements Comparable<DollarAmount>{
 	
 	private long totalAmountInCents;
 	
@@ -52,5 +52,14 @@ public class DollarAmount {
 	public DollarAmount minus(DollarAmount amountToSubtract) {
 		 DollarAmount subtract = new DollarAmount(totalAmountInCents - amountToSubtract.totalAmountInCents);
 		 return subtract;
+	}
+	
+	public int compareTo(DollarAmount otherDollarAmount){
+		if(this.totalAmountInCents == otherDollarAmount.totalAmountInCents)
+			return 0;
+		else if(totalAmountInCents >= otherDollarAmount.totalAmountInCents)
+			return 1;
+		else
+			return -1;
 	}
 }

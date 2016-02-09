@@ -23,7 +23,7 @@ public class BankAccount {
 	}
 	
 	public void transfer(BankAccount accountReceivingTransfer, DollarAmount amountToTransfer){
-		balance = balance.minus(amountToTransfer);
+		this.withdraw(amountToTransfer);
 		//3 ways to deposit into account receiving transfer
 		//accountReceivingTransfer.balance=accountReceivingTransfer.balance.plus(amountToTransfer);
 		//accountReceivingTransfer.balance=accountReceivingTransfer.getBalance().plus(amountToTransfer);
