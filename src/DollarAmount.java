@@ -1,50 +1,56 @@
 
 public class DollarAmount {
 	
-	private static long totalAmountInCents;
+	private long totalAmountInCents;
 	
 	public DollarAmount(long totalAmountInCents) {
 		this.totalAmountInCents = totalAmountInCents;
 	}
-	public long getCents() {
-		return totalAmountInCents;
+	public DollarAmount(long dollars, int cents){
+		totalAmountInCents=dollars*100+cents;
+	}
+	public int getCents() {
+		int cents=(int)totalAmountInCents%100;
+		return cents;
+		
 	}
 	public long getDollars() {
 		return totalAmountInCents/100;
 	}
 	
-	public boolean isEqualTo(long amountToCompare) {
-	if(totalAmountInCents == amountToCompare) 
-		return true;
 	
-	else
-		return false; 
+	public boolean isEqualTo(DollarAmount amount) {
+		if(totalAmountInCents == amount.totalAmountInCents) 
+			return true;
+	
+		else
+			return false; 
 	}
-	public boolean isLessThan(long amountToCompare) {
-		if(totalAmountInCents < amountToCompare) 
+	public boolean isLessThan(DollarAmount amount) {
+		if(totalAmountInCents < amount.totalAmountInCents) 
 			return true;
 		
 		else
 			return false; 
 	}
-		public boolean isGreaterThan(long amountToCompare) {
-			if(totalAmountInCents > amountToCompare) 
-				return true;
-			
-			else
-				return false; 
-		}
-		public boolean isNegative() {
-			if(totalAmountInCents < 0) 
-				return true;
-			
-			else
-				return false; 
-		}
-		public void plus(long amountToAdd) {
-			 totalAmountInCents = totalAmountInCents + amountToAdd;
-		}
-		public void minus(long amountToSubtract) {
-			 totalAmountInCents = totalAmountInCents - amountToSubtract;
-}
+	public boolean isGreaterThan(DollarAmount amount) {
+		if(totalAmountInCents > amount.totalAmountInCents) 
+			return true;
+		else
+			return false; 
+	}
+	public boolean isNegative() {
+		if(totalAmountInCents < 0) 
+			return true;
+		else
+			return false; 
+	}
+	public DollarAmount plus(DollarAmount amountToAdd) {
+		DollarAmount sum = new DollarAmount(totalAmountInCents+amountToAdd.totalAmountInCents);
+		return sum;
+	}
+	public DollarAmount minus(DollarAmount amountToSubtract) {
+		 DollarAmount subtract = new DollarAmount(totalAmountInCents - amountToSubtract.totalAmountInCents);
+		 return subtract;
+	}
 }
