@@ -1,3 +1,5 @@
+import java.lang.*;
+import java.util.*;
 
 public class DollarAmount implements Comparable<DollarAmount>{
 	
@@ -19,13 +21,13 @@ public class DollarAmount implements Comparable<DollarAmount>{
 	}
 	
 	
-	public boolean isEqualTo(DollarAmount amount) {
+	/*public boolean isEqualTo(DollarAmount amount) {
 		if(totalAmountInCents == amount.totalAmountInCents) 
 			return true;
 	
 		else
 			return false; 
-	}
+	}*/
 	public boolean isLessThan(DollarAmount amount) {
 		if(totalAmountInCents < amount.totalAmountInCents) 
 			return true;
@@ -62,4 +64,23 @@ public class DollarAmount implements Comparable<DollarAmount>{
 		else
 			return -1;
 	}
+	public boolean equals(DollarAmount amount){
+		
+		if(totalAmountInCents == amount.totalAmountInCents) 
+			return true;
+	
+		else
+			return false; 
+	}
+	
+	public String toString(){
+		return "$"+Long.toString(this.getDollars())+"."+Integer.toString(this.getCents());
+		
+	}
+	
+	public int hashCode(){
+		return (int)this.totalAmountInCents;
+	}
+	
+	
 }

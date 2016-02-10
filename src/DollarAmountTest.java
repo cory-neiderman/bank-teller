@@ -17,12 +17,12 @@ public class DollarAmountTest {
 		}
 		
 		DollarAmount equalAmount = new DollarAmount(1, 23);  //lets try the dollar and cent constructor
-		if(!newAmount.isEqualTo(equalAmount)){
+		if(!newAmount.equals(equalAmount)){
 			allTestsPassed = false;
 			System.out.println("FAIL.  newAmount should eaual equalAmount");
 		}
 		DollarAmount equalAmount2 = new DollarAmount(123); 		//test isEqualTo() method
-		if(!newAmount.isEqualTo(equalAmount2)){
+		if(!newAmount.equals(equalAmount2)){
 			allTestsPassed = false;
 			System.out.println("FAIL.  newAmount should eaual equalAmount2");
 		}
@@ -31,7 +31,7 @@ public class DollarAmountTest {
 		DollarAmount lesserAmount = new DollarAmount(103);		
 		
 		//test isEqualTo, isLessThan, and isGreaterThan methods
-		if(newAmount.isEqualTo(greaterAmount) || newAmount.isEqualTo(lesserAmount)){
+		if(newAmount.equals(greaterAmount) || newAmount.equals(lesserAmount)){
 			allTestsPassed = false;
 			System.out.println("FAIL.  newAmount should not eaual greaterAmount or lesserAmount");
 		}
@@ -61,14 +61,14 @@ public class DollarAmountTest {
 		
 		DollarAmount addedAmount = new DollarAmount(378);		//test plus() method
 		DollarAmount addedTotalAmount = new DollarAmount(501);
-		if(!newAmount.plus(addedAmount).isEqualTo(addedTotalAmount)){
+		if(!newAmount.plus(addedAmount).equals(addedTotalAmount)){
 			allTestsPassed = false;
 			System.out.println("FAIL.  DollarAmount objects should be equal but arent.");
 		}
 		
 		DollarAmount subAmount = new DollarAmount(67);		//test minus() method
 		DollarAmount subTotalAmount = new DollarAmount(56);
-		if(!newAmount.minus(subAmount).isEqualTo(subTotalAmount)){
+		if(!newAmount.minus(subAmount).equals(subTotalAmount)){
 			allTestsPassed = false;
 			System.out.println("FAIL.  DollarAmount objects should be equal but arent.");
 		}
@@ -102,6 +102,11 @@ public class DollarAmountTest {
 		if(allTestsPassed) {
 			System.out.println("All tests PASSED!");
 		}
+		
+		System.out.println(greaterAmount.toString());
+		
+		System.out.println(newAmount.hashCode());
+		System.out.println(equalAmount2.hashCode());
 
 	}
 

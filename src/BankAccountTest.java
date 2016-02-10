@@ -13,10 +13,10 @@ public class BankAccountTest {
 		
 		DollarAmount depositAmount = new DollarAmount(125);
 		DollarAmount finalAmount = new DollarAmount(375);
-		if(firstAccount.deposit(depositAmount).isEqualTo(finalAmount))
+		if(firstAccount.deposit(depositAmount).equals(finalAmount))
 			System.out.println("Amounts are equal. Success");
 		
-		if(firstAccount.getBalance().isEqualTo(finalAmount))
+		if(firstAccount.getBalance().equals(finalAmount))
 			System.out.println("Amounts are equal. Success");
 
 		
@@ -30,12 +30,12 @@ public class BankAccountTest {
 		DollarAmount firstAccountBalanceAfterTransfer = new DollarAmount(175);
 		DollarAmount transferAccountBalanceAfterTransfer = new DollarAmount(611);
 		
-		if(firstAccount.getBalance().isEqualTo(firstAccountBalanceAfterTransfer))
+		if(firstAccount.getBalance().equals(firstAccountBalanceAfterTransfer))
 			System.out.println("Success");
 		else
 			System.out.println("Fail");
 		
-		if(transferAccount.getBalance().isEqualTo(transferAccountBalanceAfterTransfer))
+		if(transferAccount.getBalance().equals(transferAccountBalanceAfterTransfer))
 			System.out.println("Success");
 		else{
 			System.out.println("Fail.  balance is "+transferAccount.getBalance().getDollars()+transferAccount.getBalance().getCents());
@@ -50,7 +50,7 @@ public class BankAccountTest {
 		
 		DollarAmount myAmount = new DollarAmount(350);	//bank account needs a starting dollar amount
 		BankAccount myBankAccount = new BankAccount("Vict0ar", "111111", myAmount);  	//initialize new BankAccount
-		if(!myBankAccount.getBalance().isEqualTo(new DollarAmount(350))){				//test the starting balance using getBalance
+		if(!myBankAccount.getBalance().equals(new DollarAmount(350))){				//test the starting balance using getBalance
 			allTestsPassed=false;
 			System.out.println("Test 1 FAIL. Balance should be equal to DollarAmount(350) but is not.");
 		}
@@ -58,7 +58,7 @@ public class BankAccountTest {
 		DollarAmount amountAfterDeposit = new DollarAmount(562);	//we need a final DollarAmount and 350+212=562.
 																	//use the deposit method which returns a DollarAmount object and compare to
 																	//our final DollarAmount object amountAfterDeposit ie DollarAmount(562)
-		if(!myBankAccount.deposit(amountToDeposit).isEqualTo(amountAfterDeposit)){
+		if(!myBankAccount.deposit(amountToDeposit).equals(amountAfterDeposit)){
 			allTestsPassed=false;
 			System.out.println("Test 2 FAIL. deposit method should return a DollarAmount equal to amountAfterDeposit.Instead balance is +");
 			System.out.print(myBankAccount.getBalance().getDollars()); 
@@ -67,7 +67,7 @@ public class BankAccountTest {
 		//check withdraw method in same fashion
 		DollarAmount amountToWithdraw=new DollarAmount(147);
 		DollarAmount amountAfterWithdrawal = new DollarAmount(415);			//562-147=415
-		if(!myBankAccount.withdraw(amountToWithdraw).isEqualTo(amountAfterWithdrawal)){
+		if(!myBankAccount.withdraw(amountToWithdraw).equals(amountAfterWithdrawal)){
 			allTestsPassed=false;
 			System.out.println("Test 2 FAIL. deposit method should return a DollarAmount equal to amountAfterDeposit.Instead balance is +");
 			System.out.print(myBankAccount.getBalance().getDollars()); 
@@ -81,13 +81,13 @@ public class BankAccountTest {
 		DollarAmount transferAccountAmountAfterTransfer = new DollarAmount(798);	//720+78=798
 		myBankAccount.transfer(accountToTransferTo, amountToTransfer);				//call the transfer method
 		//now make sure myBankAccount has the proper balance and accountToTransferTo has the proper balance
-		if(!myBankAccount.getBalance().isEqualTo(myAccountAmountAfterTransfer)){
+		if(!myBankAccount.getBalance().equals(myAccountAmountAfterTransfer)){
 			allTestsPassed=false;
 			System.out.println("Test 3 FAIL. Balance of myAccount should be equal to myAccountAmountAfterTransfer instead it is +");
 			System.out.print(myBankAccount.getBalance().getDollars()); 
 			System.out.println(myBankAccount.getBalance().getCents());
 		}
-		if(!accountToTransferTo.getBalance().isEqualTo(transferAccountAmountAfterTransfer)){
+		if(!accountToTransferTo.getBalance().equals(transferAccountAmountAfterTransfer)){
 			allTestsPassed=false;
 			System.out.println("Test 4 FAIL. accountToTransferTo Balance should be equal to transferAccountAmountAfterTransfer instead it is +");
 			System.out.print(accountToTransferTo.getBalance().getDollars()); 
