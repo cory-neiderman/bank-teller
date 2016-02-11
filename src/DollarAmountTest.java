@@ -102,8 +102,15 @@ public class DollarAmountTest {
 		if(allTestsPassed) {
 			System.out.println("All tests PASSED!");
 		}
+		DollarAmount oneCent = new DollarAmount(1);
+		DollarAmount tenCent = new DollarAmount(10);
+
+		System.out.println(newAmount);
+		System.out.println(oneCent);
+		System.out.println(oneCent.getCents());
 		
-		System.out.println(greaterAmount.toString());
+		System.out.println(tenCent);
+		System.out.println(tenCent.getCents());
 		
 		System.out.println(newAmount.hashCode());
 		System.out.println(equalAmount2.hashCode());

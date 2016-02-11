@@ -1,5 +1,4 @@
-import java.lang.*;
-import java.util.*;
+
 
 public class DollarAmount implements Comparable<DollarAmount>{
 	
@@ -72,10 +71,17 @@ public class DollarAmount implements Comparable<DollarAmount>{
 		else
 			return false; 
 	}
-	
-	public String toString(){
-		return "$"+Long.toString(this.getDollars())+"."+Integer.toString(this.getCents());
-		
+
+	@Override
+	public String toString() {
+		//return "$"+Long.toString(this.getDollars())+"."+Integer.toString(this.getCents());
+		if(this.getCents()<10){
+			return "$"+this.getDollars()+".0"+this.getCents();
+		}
+		else
+			return "$"+this.getDollars()+"."+this.getCents();
+
+		//return "DollarAmount [totalAmountInCents=" + totalAmountInCents + "]";
 	}
 	
 	public int hashCode(){

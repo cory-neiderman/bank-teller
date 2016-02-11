@@ -94,10 +94,27 @@ public class BankAccountTest {
 			System.out.println(accountToTransferTo.getBalance().getCents());
 		}
 		
+		//test savings account
+		
 		
 		if(allTestsPassed) {		
 			System.out.println("All tests PASSED!");
 		}
+		
+		SavingsAccount mySavingsAccount = new SavingsAccount("Cory", "2468", new DollarAmount(50000));
+		System.out.println(mySavingsAccount.getBalance().getDollars()+"."+mySavingsAccount.getBalance().getCents()); 
+		System.out.println(mySavingsAccount.withdraw(new DollarAmount(40000)));
+		System.out.println(mySavingsAccount.withdraw(new DollarAmount(52000)));
+		System.out.println(mySavingsAccount.withdraw(new DollarAmount(49999)));
+		
+		CheckingAccount myCheckingAccount = new CheckingAccount("CVN", "442233", new DollarAmount(30000));
+		System.out.println(myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(35000)));
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(39500)));
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(45000)));
+
+		
+
 	}
 
 }
