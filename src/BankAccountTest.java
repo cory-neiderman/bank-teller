@@ -6,7 +6,8 @@ public class BankAccountTest {
 		
 		//manual tests
 		DollarAmount firstAmount = new DollarAmount(250);
-		BankAccount firstAccount = new BankAccount("Cory", "12345", firstAmount);
+		BankCustomer firstCustomer = new BankCustomer("Cory", "cleveland", "4");
+		BankAccount firstAccount = new BankAccount(firstCustomer, "12345", firstAmount);
 		
 		System.out.print(firstAccount.getBalance().getDollars()); 
 		System.out.println(firstAccount.getBalance().getCents());
@@ -21,7 +22,7 @@ public class BankAccountTest {
 
 		
 		DollarAmount transferAccountBalance = new DollarAmount(411);
-		BankAccount transferAccount = new BankAccount("Joe", "112233", transferAccountBalance);
+		BankAccount transferAccount = new BankAccount(firstCustomer, "112233", transferAccountBalance);
 		
 		DollarAmount transferAmount = new DollarAmount(200);
 		
@@ -49,7 +50,7 @@ public class BankAccountTest {
 		boolean allTestsPassed=true;
 		
 		DollarAmount myAmount = new DollarAmount(350);	//bank account needs a starting dollar amount
-		BankAccount myBankAccount = new BankAccount("Vict0ar", "111111", myAmount);  	//initialize new BankAccount
+		BankAccount myBankAccount = new BankAccount(firstCustomer, "111111", myAmount);  	//initialize new BankAccount
 		if(!myBankAccount.getBalance().equals(new DollarAmount(350))){				//test the starting balance using getBalance
 			allTestsPassed=false;
 			System.out.println("Test 1 FAIL. Balance should be equal to DollarAmount(350) but is not.");
@@ -75,7 +76,7 @@ public class BankAccountTest {
 		}
 		//now test the transfer method.  we need a new bank account and a DollarAmount to transfer and a starting balance
 		DollarAmount transferAccountAmount = new DollarAmount(720);
-		BankAccount accountToTransferTo = new BankAccount("James","2468", transferAccountAmount);
+		BankAccount accountToTransferTo = new BankAccount(firstCustomer,"2468", transferAccountAmount);
 		DollarAmount amountToTransfer = new DollarAmount(78); 
 		DollarAmount myAccountAmountAfterTransfer = new DollarAmount(337);			//415-78=337
 		DollarAmount transferAccountAmountAfterTransfer = new DollarAmount(798);	//720+78=798
@@ -94,25 +95,78 @@ public class BankAccountTest {
 			System.out.println(accountToTransferTo.getBalance().getCents());
 		}
 		
-		//test savings account
+		
+		
 		
 		
 		if(allTestsPassed) {		
 			System.out.println("All tests PASSED!");
 		}
 		
-		SavingsAccount mySavingsAccount = new SavingsAccount("Cory", "2468", new DollarAmount(50000));
-		System.out.println(mySavingsAccount.getBalance().getDollars()+"."+mySavingsAccount.getBalance().getCents()); 
-		System.out.println(mySavingsAccount.withdraw(new DollarAmount(40000)));
-		System.out.println(mySavingsAccount.withdraw(new DollarAmount(52000)));
-		System.out.println(mySavingsAccount.withdraw(new DollarAmount(49999)));
+		System.out.println();
+		System.out.println();
 		
-		CheckingAccount myCheckingAccount = new CheckingAccount("CVN", "442233", new DollarAmount(30000));
-		System.out.println(myCheckingAccount.getBalance());
-		System.out.println(myCheckingAccount.withdraw(new DollarAmount(35000)));
-		System.out.println(myCheckingAccount.withdraw(new DollarAmount(39500)));
-		System.out.println(myCheckingAccount.withdraw(new DollarAmount(45000)));
+		//test SavingAccount class
+		SavingsAccount mySavingsAccount = new SavingsAccount(firstCustomer, "2468", new DollarAmount(50000));
+		
+		System.out.println(mySavingsAccount.getBalance().getDollars()+"."+mySavingsAccount.getBalance().getCents()); 
+		System.out.println(mySavingsAccount.getBalance());
+		System.out.println(mySavingsAccount.withdraw(new DollarAmount(50000)));
+		System.out.println(mySavingsAccount.withdraw(new DollarAmount(20000)));
+		System.out.println(mySavingsAccount.getBalance());
+		System.out.println(mySavingsAccount.withdraw(new DollarAmount(20000)));
+		mySavingsAccount.deposit(new DollarAmount(3000));
+		System.out.println(mySavingsAccount.getBalance());
 
+		System.out.println();
+		System.out.println();
+		
+		//now test checking acount
+		CheckingAccount myCheckingAccount = new CheckingAccount(firstCustomer, "2468", new DollarAmount(50000));
+		System.out.println(myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(50000))+", "+myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(60000))+", "+myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(5000))+", "+myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(1000))+", "+myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.deposit(new DollarAmount(50000))+", "+myCheckingAccount.getBalance());
+		System.out.println(myCheckingAccount.withdraw(new DollarAmount(1000))+", "+myCheckingAccount.getBalance());
+		
+		System.out.println();
+		System.out.println();
+		
+		BankCustomer testCustomer = new BankCustomer("Rich Man", "(555) 555-5555", "Cleveland");
+		CheckingAccount testCustomerCheckingAccount = new CheckingAccount(testCustomer, "12345", new DollarAmount(2000000)); 
+		SavingsAccount testCustomerSavingsAccount = new SavingsAccount(testCustomer, "77777", new DollarAmount(1000000));
+		testCustomer.setSavingsAccount(testCustomerSavingsAccount);
+		testCustomer.setCheckingAccount(testCustomerCheckingAccount);
+		System.out.println(testCustomer.isVIP());
+		System.out.println(testCustomer.getCheckingAccount().getBalance());
+		
+		BankCustomer secondCustomer = new BankCustomer("Rich Man", "(555) 555-5555", "Cleveland");
+		CheckingAccount secondCustomerCheckingAccount = new CheckingAccount(secondCustomer, "12345", new DollarAmount(50000)); 
+		SavingsAccount secondCustomerSavingsAccount = new SavingsAccount(secondCustomer, "77777", new DollarAmount(20000));
+		secondCustomer.setSavingsAccount(secondCustomerSavingsAccount);
+		secondCustomer.setCheckingAccount(secondCustomerCheckingAccount);
+		System.out.println(secondCustomer.isVIP());
+		
+		System.out.println(secondCustomer.getCheckingAccount().withdraw(new DollarAmount(5000)));
+		System.out.println(secondCustomer.getCheckingAccount().getBalance());
+		System.out.println(secondCustomer.getCheckingAccount().deposit(new DollarAmount(2000000)));
+		System.out.println(secondCustomer.getSavingsAccount().getBalance());
+		System.out.println(secondCustomer.isVIP());
+		System.out.println(secondCustomer.getSavingsAccount().deposit(new DollarAmount(500000)));
+		System.out.println(secondCustomer.isVIP());
+		System.out.println(secondCustomer.getCheckingAccount().withdraw(new DollarAmount(2100000)));
+		System.out.println(secondCustomer.getCheckingAccount().withdraw(new DollarAmount(2000000)));
+		System.out.println(secondCustomer.getCheckingAccount().withdraw(new DollarAmount(50000)));
+		
+		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(6000000)));
+		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(505000)));
+		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(1)));
+		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(4200)));
+		
+
+		
 		
 
 	}

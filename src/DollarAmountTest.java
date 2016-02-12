@@ -92,21 +92,21 @@ public class DollarAmountTest {
 			System.out.println("FAIL.  Should return -1, but instead returns "+testAmount2.compareTo(testAmount));
 		}
 		
-		DollarAmount equalTestAmount = new DollarAmount(950);
-		if(testAmount.compareTo(equalTestAmount)!=0){
-			allTestsPassed = false;
-			System.out.println("FAIL.  Should return 0, but instead returns "+testAmount.compareTo(equalTestAmount));
-		}
+		
 		
 		
 		if(allTestsPassed) {
 			System.out.println("All tests PASSED!");
 		}
 		DollarAmount oneCent = new DollarAmount(1);
+		System.out.println(oneCent);
+		
+		DollarAmount dollarAndCent = new DollarAmount(101);
+		System.out.println(dollarAndCent);
+
 		DollarAmount tenCent = new DollarAmount(10);
 
 		System.out.println(newAmount);
-		System.out.println(oneCent);
 		System.out.println(oneCent.getCents());
 		
 		System.out.println(tenCent);
@@ -114,7 +114,36 @@ public class DollarAmountTest {
 		
 		System.out.println(newAmount.hashCode());
 		System.out.println(equalAmount2.hashCode());
+		
+		DollarAmount amountBiggerThanInt = new DollarAmount(50000000000L);
+		System.out.println(amountBiggerThanInt.hashCode());
+		
+		DollarAmount anotherAmountBiggerThanInt = new DollarAmount(57832789132003145L);
+		DollarAmount anotherAmountBiggerThanInt1 = new DollarAmount(57832789132003145L);
 
+		System.out.println(anotherAmountBiggerThanInt.hashCode());
+		System.out.println(anotherAmountBiggerThanInt1.hashCode());
+		if(!anotherAmountBiggerThanInt.equals(anotherAmountBiggerThanInt1))
+			System.out.println("Fail. Should be equal");
+		else
+			System.out.println("Success");
+		
+		DollarAmount anotherAmountBiggerThanIntWith2Parameters = new DollarAmount(578327891320031L, 45);
+		if(!anotherAmountBiggerThanInt.equals(anotherAmountBiggerThanIntWith2Parameters))
+			System.out.println("Fail. Should be equal");
+		else
+			System.out.println("Success");
+
+
+		System.out.println(amountBiggerThanInt);
+		System.out.println(anotherAmountBiggerThanInt);
+		System.out.println(amountBiggerThanInt.getCents());
+		System.out.println(anotherAmountBiggerThanInt.getCents());
+		System.out.println(dollarAndCent.getCents());
+		System.out.println(newAmount.getCents());
+		System.out.println(addedAmount.getCents());
+		System.out.println(equalAmount.getCents());
+		
 	}
 
 }

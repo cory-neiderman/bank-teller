@@ -1,24 +1,25 @@
 
 public class CheckingAccount extends BankAccount {
 	
-	private DollarAmount balance;
 	
-	public CheckingAccount(String name, String accountNumber, DollarAmount amount) {
-		super(name, accountNumber, amount);
-		balance = amount;
-		// TODO Auto-generated constructor stub
+	public CheckingAccount(BankCustomer customer, String accountNumber, DollarAmount amount) {
+		super(customer, accountNumber, amount);
+		
 	}
 	
 	public DollarAmount withdraw(DollarAmount amountToWithdraw){
-		if(balance.minus(amountToWithdraw).isNegative()){
-			if(balance.minus(amountToWithdraw).minus(new DollarAmount(1000)).isLessThan(new DollarAmount(-10000))){
-				return balance;  //if withdrawal plus 10.00 fee is less than 100.00 then no transaction occurs and balance is returned unchanged
+		if(this.getBalance().minus(amountToWithdraw).isNegative()){
+			if(this.getBalance().minus(amountToWithdraw).minus(new DollarAmount(1000)).isLessThan(new DollarAmount(-10000))){
+				return this.getBalance();  //if withdrawal plus $10 leaves the account below -100, then no transaction occurs
 			}
-			else{
-				return balance.minus(amountToWithdraw).minus(new DollarAmount(1000));
+			else{						
+				super.withdraw(amountToWithdraw);
+				super.withdraw(new DollarAmount(1000));  //if withdrawal leaves the account negative, then a $10 fee is imposed
+				return getBalance();
 			}
 		}
-		return balance.minus(amountToWithdraw);
+		super.withdraw(amountToWithdraw);
+		return getBalance();
 	} 
 
 }

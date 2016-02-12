@@ -1,12 +1,12 @@
 
 public class BankAccount {
 	
-	private String name;
+	private BankCustomer customer;
 	private String accountNumber;
 	private DollarAmount balance;
 	
-	public BankAccount(String name, String accountNumber, DollarAmount amount){
-		this.name=name;
+	public BankAccount(BankCustomer customer, String accountNumber, DollarAmount amount){
+		this.customer=customer;
 		this.accountNumber=accountNumber;
 		balance = amount;
 	}
@@ -17,6 +17,8 @@ public class BankAccount {
 
 		
 	}
+	
+	
 	
 	public DollarAmount getBalance(){
 		return balance;

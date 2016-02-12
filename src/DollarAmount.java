@@ -10,9 +10,10 @@ public class DollarAmount implements Comparable<DollarAmount>{
 	public DollarAmount(long dollars, int cents){
 		totalAmountInCents=dollars*100+cents;
 	}
+	
 	public int getCents() {
-		int cents=(int)totalAmountInCents%100;
-		return cents;
+		int cents=(int)(totalAmountInCents%100);	//need parantheses around totalAmountInCents%100 otherwise it wont work for long numbers
+		return cents;								//(int)totalAmountInCents%100 wont work.  It must do the modulo operation on the long first
 		
 	}
 	public long getDollars() {
@@ -20,13 +21,22 @@ public class DollarAmount implements Comparable<DollarAmount>{
 	}
 	
 	
-	/*public boolean isEqualTo(DollarAmount amount) {
+	/*public boolean isEqualTo(DollarAmount amount) {			//this method is replaced by the equals method below
 		if(totalAmountInCents == amount.totalAmountInCents) 
 			return true;
 	
 		else
 			return false; 
 	}*/
+	
+	public boolean equals(DollarAmount amount){
+		
+		if(totalAmountInCents == amount.totalAmountInCents) 
+			return true;
+	
+		else
+			return false; 
+	}
 	public boolean isLessThan(DollarAmount amount) {
 		if(totalAmountInCents < amount.totalAmountInCents) 
 			return true;
@@ -63,14 +73,7 @@ public class DollarAmount implements Comparable<DollarAmount>{
 		else
 			return -1;
 	}
-	public boolean equals(DollarAmount amount){
-		
-		if(totalAmountInCents == amount.totalAmountInCents) 
-			return true;
 	
-		else
-			return false; 
-	}
 
 	@Override
 	public String toString() {
@@ -86,6 +89,8 @@ public class DollarAmount implements Comparable<DollarAmount>{
 	
 	public int hashCode(){
 		return (int)this.totalAmountInCents;
+		//return (int) (this.totalAmountInCents^(this.totalAmountInCents>>>32));  //stack overflow solution.  returns same as above
+
 	}
 	
 	
