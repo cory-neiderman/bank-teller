@@ -134,7 +134,7 @@ public class BankAccountTest {
 		System.out.println();
 		System.out.println();
 		
-		BankCustomer testCustomer = new BankCustomer("Rich Man", "(555) 555-5555", "Cleveland");
+		/*BankCustomer testCustomer = new BankCustomer("Rich Man", "(555) 555-5555", "Cleveland");
 		CheckingAccount testCustomerCheckingAccount = new CheckingAccount(testCustomer, "12345", new DollarAmount(2000000)); 
 		SavingsAccount testCustomerSavingsAccount = new SavingsAccount(testCustomer, "77777", new DollarAmount(1000000));
 		testCustomer.setSavingsAccount(testCustomerSavingsAccount);
@@ -163,10 +163,42 @@ public class BankAccountTest {
 		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(6000000)));
 		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(505000)));
 		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(1)));
-		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(4200)));
+		System.out.println(secondCustomer.getSavingsAccount().withdraw(new DollarAmount(4)));
+		*/
 		
+		BankCustomer dude = new BankCustomer("dude", "(111)867-5309", "the land");
+		
+		CheckingAccount dudesCheckingAccount1 = new CheckingAccount(dude, "12345", new DollarAmount(500000));
+		CheckingAccount dudesCheckingAccount2 = new CheckingAccount(dude, "12345", new DollarAmount(1000000));
+		CheckingAccount dudesCheckingAccount3 = new CheckingAccount(dude, "12345", new DollarAmount(7000));
+		SavingsAccount dudesSavingsAccount1 = new SavingsAccount(dude, "12345", new DollarAmount(4));
+		SavingsAccount dudesSavingsAccount2 = new SavingsAccount(dude, "12345", new DollarAmount(1575000));
+		SavingsAccount dudesSavingsAccount3 = new SavingsAccount(dude, "12345", new DollarAmount(56700));
+		
+		dude.addBankAccount(dudesCheckingAccount1);
+		dude.addBankAccount(dudesSavingsAccount1);
 
-		
+		if(dude.isVIP()){
+			System.out.println("Customer is a VIP.  His total balance is "+dude.getAccountBalanceTotal());
+		}
+		else{
+			System.out.println("Customer is NOT a VIP.  His total balance is "+dude.getAccountBalanceTotal());
+
+		}
+		dude.addBankAccount(dudesCheckingAccount2);
+		dude.addBankAccount(dudesSavingsAccount2);
+		dude.addBankAccount(dudesCheckingAccount3);
+		dude.addBankAccount(dudesSavingsAccount3);
+
+		if(dude.isVIP()){
+			System.out.println("Customer is a VIP.  His total balance is "+dude.getAccountBalanceTotal());
+		}
+		else{
+			System.out.println("Customer is NOT a VIP.  His total balance is "+dude.getAccountBalanceTotal());
+
+		}
+		System.out.println(new DollarAmount(500000).plus(new DollarAmount(1000000)).plus(new DollarAmount(7000)).plus(new DollarAmount(4)).plus(new DollarAmount(1575000)).plus(new DollarAmount(56700)));
+
 		
 
 	}

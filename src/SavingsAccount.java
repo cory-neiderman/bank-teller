@@ -1,7 +1,12 @@
 
 public class SavingsAccount extends BankAccount {
+	
+	private String accountType = "Savings Account";
+	private String accountNumber;;
+	
 	public SavingsAccount(BankCustomer customer, String accountNumber, DollarAmount amount) {
 		super(customer, accountNumber, amount);
+		this.accountNumber=accountNumber;
 		// TODO Auto-generated constructor stub
 	}
 	public DollarAmount withdraw(DollarAmount amountToWithdraw){
@@ -18,6 +23,11 @@ public class SavingsAccount extends BankAccount {
 		
 		super.withdraw(amountToWithdraw);
 		return this.getBalance();
+	}
+	public String getAccountType() {
+		return accountType;
 	} 
-
+	public String getAccountNumber(){
+		return accountNumber;
+	}
 }

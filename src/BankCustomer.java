@@ -6,8 +6,8 @@ public class BankCustomer {
 	private String name;
 	private String address;
 	private String phoneNumber;
-	private SavingsAccount customerSavingsAccount;
-	private CheckingAccount customerCheckingAccount;
+	//private SavingsAccount customerSavingsAccount;
+	//private CheckingAccount customerCheckingAccount;
 	
 	private List<BankAccount> accountsList = new ArrayList<>();
 	
@@ -15,8 +15,8 @@ public class BankCustomer {
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.customerSavingsAccount = customerSavingsAccount;
-		this.customerCheckingAccount = customerCheckingAccount;
+		//this.customerSavingsAccount = customerSavingsAccount;
+		//this.customerCheckingAccount = customerCheckingAccount;
 	}
 	
 	/*public void setSavingsAccount(SavingsAccount customerSavingsAccount){
@@ -32,10 +32,43 @@ public class BankCustomer {
 	}
 	public CheckingAccount getCheckingAccount(){
 		return customerCheckingAccount;
+	}
+	public boolean isVIP(){
+		if(customerSavingsAccount.getBalance().plus(customerCheckingAccount.getBalance()).isGreaterThan(new DollarAmount(2500000))){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}*/
 	
 	public void addBankAccount(BankAccount account){
 		accountsList.add(account);
+	}
+	
+	//following methods werent required but their functionality seems appropriate and they could help with testing
+	public DollarAmount getAccountBalance(BankAccount account){
+		return account.getBalance();
+	}
+	
+	public DollarAmount getAccountBalanceTotal(){
+		DollarAmount total= new DollarAmount(0);
+		for(int i=0; i<accountsList.size(); i++){
+			total=accountsList.get(i).getBalance().plus(total);
+		}
+		return total;
+	}  
+	
+	public List<BankAccount> getAccountList(){
+		return accountsList;
+	}
+	
+	public boolean isVIP(){
+		DollarAmount VIPAmount = new DollarAmount(2500000);
+		if(getAccountBalanceTotal().isGreaterThan(VIPAmount))
+			return true;
+		else
+			return false;
 	}
 
 	public String getAddress() {
@@ -59,14 +92,7 @@ public class BankCustomer {
 		return name;
 	}
 	
-	public boolean isVIP(){
-		if(customerSavingsAccount.getBalance().plus(customerCheckingAccount.getBalance()).isGreaterThan(new DollarAmount(2500000))){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
+	
 	
 	
 

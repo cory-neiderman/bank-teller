@@ -1,5 +1,5 @@
 
-public class BankAccount {
+public abstract class BankAccount {
 	
 	private BankCustomer customer;
 	private String accountNumber;
@@ -40,8 +40,8 @@ public class BankAccount {
 		return balance;
 	}
 	
-	
-	
+	public abstract String getAccountType();
+	public abstract String getAccountNumber();
 	
 	
 }

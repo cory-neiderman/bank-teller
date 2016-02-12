@@ -1,9 +1,13 @@
 
 public class CheckingAccount extends BankAccount {
 	
+	private String accountType="Checking Account";
+	private String accountNumber;
 	
 	public CheckingAccount(BankCustomer customer, String accountNumber, DollarAmount amount) {
 		super(customer, accountNumber, amount);
+		
+		this.accountNumber=accountNumber;
 		
 	}
 	
@@ -21,5 +25,10 @@ public class CheckingAccount extends BankAccount {
 		super.withdraw(amountToWithdraw);
 		return getBalance();
 	} 
-
+	public String getAccountType(){
+		return accountType;
+	}
+	public String getAccountNumber(){
+		return accountNumber;
+	}
 }
