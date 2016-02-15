@@ -7,8 +7,9 @@ public class BankAccountTest {
 		//manual tests
 		DollarAmount firstAmount = new DollarAmount(250);
 		BankCustomer firstCustomer = new BankCustomer("Cory", "cleveland", "4");
-		BankAccount firstAccount = new BankAccount(firstCustomer, "12345", firstAmount);
-		
+		//BankAccount firstAccount = new BankAccount(firstCustomer, "12345", firstAmount);
+		CheckingAccount firstAccount = new CheckingAccount(firstCustomer, "12345", firstAmount);
+
 		System.out.print(firstAccount.getBalance().getDollars()); 
 		System.out.println(firstAccount.getBalance().getCents());
 		
@@ -22,7 +23,8 @@ public class BankAccountTest {
 
 		
 		DollarAmount transferAccountBalance = new DollarAmount(411);
-		BankAccount transferAccount = new BankAccount(firstCustomer, "112233", transferAccountBalance);
+		//BankAccount transferAccount = new BankAccount(firstCustomer, "112233", transferAccountBalance);
+		CheckingAccount transferAccount = new CheckingAccount(firstCustomer, "112233", transferAccountBalance);
 		
 		DollarAmount transferAmount = new DollarAmount(200);
 		
@@ -50,7 +52,8 @@ public class BankAccountTest {
 		boolean allTestsPassed=true;
 		
 		DollarAmount myAmount = new DollarAmount(350);	//bank account needs a starting dollar amount
-		BankAccount myBankAccount = new BankAccount(firstCustomer, "111111", myAmount);  	//initialize new BankAccount
+		//BankAccount myBankAccount = new BankAccount(firstCustomer, "111111", myAmount);  	//initialize new BankAccount
+		CheckingAccount myBankAccount = new CheckingAccount(firstCustomer, "111111", myAmount);
 		if(!myBankAccount.getBalance().equals(new DollarAmount(350))){				//test the starting balance using getBalance
 			allTestsPassed=false;
 			System.out.println("Test 1 FAIL. Balance should be equal to DollarAmount(350) but is not.");
@@ -76,7 +79,9 @@ public class BankAccountTest {
 		}
 		//now test the transfer method.  we need a new bank account and a DollarAmount to transfer and a starting balance
 		DollarAmount transferAccountAmount = new DollarAmount(720);
-		BankAccount accountToTransferTo = new BankAccount(firstCustomer,"2468", transferAccountAmount);
+		//BankAccount accountToTransferTo = new BankAccount(firstCustomer,"2468", transferAccountAmount);
+		CheckingAccount accountToTransferTo = new CheckingAccount(firstCustomer,"2468", transferAccountAmount);
+
 		DollarAmount amountToTransfer = new DollarAmount(78); 
 		DollarAmount myAccountAmountAfterTransfer = new DollarAmount(337);			//415-78=337
 		DollarAmount transferAccountAmountAfterTransfer = new DollarAmount(798);	//720+78=798

@@ -31,4 +31,5 @@ public class CheckingAccount extends BankAccount {
 	public String getAccountNumber(){
 		return accountNumber;
 	}
+ 
 }
