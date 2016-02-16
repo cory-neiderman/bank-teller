@@ -1,5 +1,5 @@
 
-public class DollarAmountTest {
+public class DollarAmountTestOld {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

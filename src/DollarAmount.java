@@ -7,7 +7,8 @@ public class DollarAmount implements Comparable<DollarAmount>{
 	public DollarAmount(long totalAmountInCents) {
 		this.totalAmountInCents = totalAmountInCents;
 	}
-	public DollarAmount(long dollars, int cents){
+	
+	public DollarAmount(long dollars, int cents){   //2nd constructor so we can create a DollarAmount with dollars and cents like so DollarAmount(100, 42)
 		totalAmountInCents=dollars*100+cents;
 	}
 	
@@ -29,13 +30,12 @@ public class DollarAmount implements Comparable<DollarAmount>{
 			return false; 
 	}*/
 	
-	public boolean equals(DollarAmount amount){
-		
-		if(totalAmountInCents == amount.totalAmountInCents) 
+	public boolean equals(Object obj){
+		if(totalAmountInCents == ((DollarAmount)obj).totalAmountInCents)
 			return true;
-	
 		else
-			return false; 
+			return false;
+		
 	}
 	public boolean isLessThan(DollarAmount amount) {
 		if(totalAmountInCents < amount.totalAmountInCents) 
