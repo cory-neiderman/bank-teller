@@ -8,6 +8,10 @@ public class DollarAmount implements Comparable<DollarAmount>{
 		this.totalAmountInCents = totalAmountInCents;
 	}
 	
+	public long getTotalAmountInCents(){
+		return totalAmountInCents;
+	}
+	
 	public DollarAmount(long dollars, int cents){   //2nd constructor so we can create a DollarAmount with dollars and cents like so DollarAmount(100, 42)
 		totalAmountInCents=dollars*100+cents;
 	}

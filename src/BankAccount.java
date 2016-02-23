@@ -17,9 +17,6 @@ public abstract class BankAccount {
 
 		
 	}
-	
-	
-	
 	public DollarAmount getBalance(){
 		return balance;
 	}

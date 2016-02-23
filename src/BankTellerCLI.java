@@ -1,4 +1,11 @@
 
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
 import com.techelevator.util.Terminal;
 
 public class BankTellerCLI {
@@ -10,7 +17,7 @@ public class BankTellerCLI {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
 		
 		BankTellerCLI application = new BankTellerCLI();
 		application.run();
@@ -22,7 +29,7 @@ public class BankTellerCLI {
 	 
 	 
 	 
-	public void run() {
+	public void run() throws IOException{
 		while(true) {
 			int choice = Integer.parseInt(getChoiceFromMainMenu());
 			switch(choice){
@@ -42,6 +49,11 @@ public class BankTellerCLI {
 				transfer();
 				break;
 			case 6:
+				exportData();
+				break;
+			case 7:
+				importData();
+			case 8:
 				exit();
 				break;
 			default:
@@ -68,6 +80,108 @@ public class BankTellerCLI {
 		System.out.println("Invalid Entry, please try again");
 	}
 	
+	public void importData() throws IOException{
+		printBanner("IMPORT DATA");
+		System.out.print("Enter the path to import a file from >>> ");
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+		String fileName = userInput.readLine();
+		int customerImportCount=0;
+		int accountImportCount=0;
+		try(FileReader reader = new FileReader(fileName)) {
+			BufferedReader lineReader = new BufferedReader(reader);
+			String line = lineReader.readLine();
+			while(line!=null){
+				if(line.startsWith("C")){
+					customerImportCount+=1;
+					String[] customerInfo = line.substring(2).split("\\|");
+					BankCustomer newCustomer = new BankCustomer(customerInfo[0], customerInfo[1], customerInfo[2]);
+					theBank.addBankCustomer(newCustomer);
+					line=lineReader.readLine();
+					boolean sameCustomer = true;
+					while(sameCustomer && line!=null){
+						if(line.startsWith("A|C")){
+							String[] accountInfo = line.substring(2).split("\\|");
+							CheckingAccount newAccount = new CheckingAccount(newCustomer, accountInfo[1], new DollarAmount(Long.parseLong(accountInfo[2])));
+							newCustomer.addBankAccount(newAccount);
+							line=lineReader.readLine();
+							accountImportCount += 1;
+						}
+						else if(line.startsWith("A|S")){
+							String[] accountInfo = line.substring(2).split("\\|");
+							SavingsAccount newAccount = new SavingsAccount(newCustomer, accountInfo[1], new DollarAmount(Long.parseLong(accountInfo[2])));
+							newCustomer.addBankAccount(newAccount);
+							line=lineReader.readLine();
+							accountImportCount += 1;
+						}
+						else{
+							sameCustomer=false;
+						}
+					}
+
+				}
+			}
+		}
+		
+		System.out.println("\n*** "+customerImportCount+" customers and "+accountImportCount+" accounts imported from "+fileName+"\n");
+		importTest();
+	}
+	
+	public void importTest(){
+		for(int i=0; i<theBank.getBankCustomers().size(); i++){
+			System.out.println(theBank.getBankCustomers().get(i).getName()+" "+theBank.getBankCustomers().get(i).getAddress()+" "
+					+theBank.getBankCustomers().get(i).getPhoneNumber());
+			for(int j=0; j<theBank.getBankCustomers().get(i).getAccountList().size(); j++){
+				System.out.println(theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountType()+" "+
+						theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountNumber()+" "+
+						theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance());
+			}
+		}
+	}
+
+
+	
+	public void exportData() throws IOException {
+		printBanner("EXPORT DATA");
+		
+
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print("Enter the path to export a file >>> ");
+		String fileName = userInput.readLine();
+		File f = new File(fileName);
+		if(f.exists()){
+			try(PrintWriter writer = new PrintWriter(f)){
+				for(int i=0; i<theBank.getBankCustomers().size(); i++){
+					writer.println("C|"+theBank.getBankCustomers().get(i).getName()+"|"+theBank.getBankCustomers().get(i).getAddress()+"|"+theBank.getBankCustomers().get(i).getPhoneNumber());
+					for(int j=0; j<theBank.getBankCustomers().get(i).getAccountList().size(); j++){
+						writer.println("A|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountType().substring(0,1)+"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountNumber()+
+							"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance().getTotalAmountInCents());
+					}
+				}
+			}
+		}
+		else{
+			File newFile = new File(fileName);
+			newFile.createNewFile();
+			try(PrintWriter writer = new PrintWriter(f)){
+				for(int i=0; i<theBank.getBankCustomers().size(); i++){
+					writer.println("C|"+theBank.getBankCustomers().get(i).getName()+"|"+theBank.getBankCustomers().get(i).getAddress()+"|"+theBank.getBankCustomers().get(i).getPhoneNumber());
+					for(int j=0; j<theBank.getBankCustomers().get(i).getAccountList().size(); j++){
+						writer.println("A|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountType().substring(0,1)+"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountNumber()+
+							"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance().getTotalAmountInCents());
+					}
+				}
+			}
+				
+		}
+		int accountCount = 0;
+		for(int i=0; i<theBank.getBankCustomers().size(); i++){
+			accountCount= accountCount+theBank.getBankCustomers().get(i).getAccountList().size();
+		}
+		System.out.println("\n*** "+theBank.getBankCustomers().size()+" Customers and "+accountCount+" accounts were exported to "+fileName);
+	}	
+		
+	
+	
 	
 	private String getChoiceFromMainMenu() {
 		printBanner("MAIN MENU");
@@ -79,7 +193,10 @@ public class BankTellerCLI {
 		System.out.println("3) Deposit");
 		System.out.println("4) Withdrawal");
 		System.out.println("5) Transfer");
-		System.out.println("6) Exit");
+		System.out.println("6) Export");
+		System.out.println("7) Import");
+		
+		System.out.println("8) Exit");
 		System.out.println();
 		
 		return getUserInput("Enter number");
@@ -129,7 +246,7 @@ public class BankTellerCLI {
 			if(amountToDeposit.isNegative()|| amountToDeposit.equals(new DollarAmount(0))){
 				throw new NumberFormatException();
 			}
-			theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).deposit(amountToDeposit);
+
 			System.out.println("***"+amountToDeposit.toString()+" deposited into "+
 					theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).getAccountType()+" "+
 					theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).getAccountNumber()+" ***");
@@ -213,6 +330,7 @@ public class BankTellerCLI {
 		System.out.println();
 		return Integer.parseInt(getUserInput("Enter number"));	//handle case where the user chooses invalid customer
 	}
+	
 	public int chooseCustomerAccount(int choice, String chooseAccountPrompt){
 		System.out.println("\n"+chooseAccountPrompt+":\n");	
 		for(int i=0; i<theBank.getBankCustomers().get(choice-1).getAccountList().size(); i++){
