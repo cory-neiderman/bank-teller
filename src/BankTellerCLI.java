@@ -16,55 +16,47 @@ public class BankTellerCLI {
 		theBank = new Bank();
 	}
 	
-	
 	public static void main(String[] args) throws IOException{
 		
 		BankTellerCLI application = new BankTellerCLI();
 		application.run();
 	}
-	
-	//add exception handling to the deposit, withdrawal, and transfer screens
-	//that handles cases when a user inputs an invalid DollarAmount.  In these 
-	//cases, the user should be prompted to enter a valid amount.
 	 
-	 
-	 
-	public void run() throws IOException{
-		while(true) {
+	public void run() throws IOException {
+		while (true) {
 			String choice = getChoiceFromMainMenu();
-			switch(choice){
-			case "1":
-				addBankCustomer();
-				break;
-			case "2":
-				addAccount();
-				break;
-			case "3":
-				deposit();
-				break;
-			case "4":
-				withdraw();
-				break;
-			case "5":
-				transfer();
-				break;
-			case "6":
-				exportData();
-				break;
-			case "7":
-				importData();
-			case "8":
-				exit();
-				break;
-			default:
-				invalidEntry();			//handle invalid input from user by prompting them to enter a valid choice
-				break;
-			
-			
+			switch (choice) {
+				case "1":
+					addBankCustomer();
+					break;
+				case "2":
+					addAccount();
+					break;
+				case "3":
+					deposit();
+					break;
+				case "4":
+					withdraw();
+					break;
+				case "5":
+					transfer();
+					break;
+				case "6":
+					exportData();
+					break;
+				case "7":
+					importData();
+				case "8":
+					exit();
+					break;
+				default:
+					invalidEntry();
+					break;
+
 			}
-			
-			} 
+
 		}
+	}
 	public void invalidEntry(){
 		System.out.println("Invalid Entry, please try again");
 	}
@@ -112,10 +104,11 @@ public class BankTellerCLI {
 		}
 		
 		System.out.println("\n*** "+customerImportCount+" customers and "+accountImportCount+" accounts imported from "+fileName+"\n");
-		importTest();
+		//importTest();
 	}
 	
-	public void importTest(){
+	/* 
+	 * public void importTest(){
 		for(int i=0; i<theBank.getBankCustomers().size(); i++){
 			System.out.println(theBank.getBankCustomers().get(i).getName()+" "+theBank.getBankCustomers().get(i).getAddress()+" "
 					+theBank.getBankCustomers().get(i).getPhoneNumber());
@@ -125,43 +118,37 @@ public class BankTellerCLI {
 						theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance());
 			}
 		}
-	}
+	}*/
 
 
 	
 	public void exportData() throws IOException {
 		printBanner("EXPORT DATA");
 		
-
 		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 		System.out.print("Enter the path to export a file >>> ");
 		String fileName = userInput.readLine();
 		File f = new File(fileName);
-		if(f.exists()){
-			try(PrintWriter writer = new PrintWriter(f)){
-				for(int i=0; i<theBank.getBankCustomers().size(); i++){
-					writer.println("C|"+theBank.getBankCustomers().get(i).getName()+"|"+theBank.getBankCustomers().get(i).getAddress()+"|"+theBank.getBankCustomers().get(i).getPhoneNumber());
-					for(int j=0; j<theBank.getBankCustomers().get(i).getAccountList().size(); j++){
-						writer.println("A|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountType().substring(0,1)+"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountNumber()+
-							"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance().getTotalAmountInCents());
-					}
+		if (!f.exists()) {
+			f.createNewFile();
+		}
+
+		try (PrintWriter writer = new PrintWriter(f)) {
+			for (int i = 0; i < theBank.getBankCustomers().size(); i++) {
+				writer.println("C|" + theBank.getBankCustomers().get(i).getName() + "|"
+						+ theBank.getBankCustomers().get(i).getAddress() + "|"
+						+ theBank.getBankCustomers().get(i).getPhoneNumber());
+				for (int j = 0; j < theBank.getBankCustomers().get(i).getAccountList().size(); j++) {
+					writer.println("A|"
+							+ theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountType().substring(0, 1)
+							+ "|" + theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountNumber() + "|"
+							+ theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance()
+									.getTotalAmountInCents());
 				}
 			}
 		}
-		else{
-			File newFile = new File(fileName);
-			newFile.createNewFile();
-			try(PrintWriter writer = new PrintWriter(f)){
-				for(int i=0; i<theBank.getBankCustomers().size(); i++){
-					writer.println("C|"+theBank.getBankCustomers().get(i).getName()+"|"+theBank.getBankCustomers().get(i).getAddress()+"|"+theBank.getBankCustomers().get(i).getPhoneNumber());
-					for(int j=0; j<theBank.getBankCustomers().get(i).getAccountList().size(); j++){
-						writer.println("A|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountType().substring(0,1)+"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getAccountNumber()+
-							"|"+theBank.getBankCustomers().get(i).getAccountList().get(j).getBalance().getTotalAmountInCents());
-					}
-				}
-			}
-				
-		}
+		
+		
 		int accountCount = 0;
 		for(int i=0; i<theBank.getBankCustomers().size(); i++){
 			accountCount= accountCount+theBank.getBankCustomers().get(i).getAccountList().size();
@@ -194,8 +181,8 @@ public class BankTellerCLI {
 	public void addBankCustomer() {
 		printBanner("ADD BankCustomer");
 		
-		String name = getUserInput("Enter name");				//ensure that any value is entered for name, address and number
-		String address = getUserInput("Enter address");			//if invalid entry, prompt for proper value.  
+		String name = getUserInput("Enter name");				
+		String address = getUserInput("Enter address");			  
 		String phoneNumber = getUserInput("Enter phone number");
 		BankCustomer newBankCustomer = new BankCustomer(name, address, phoneNumber);
 		theBank.addBankCustomer(newBankCustomer);
@@ -207,19 +194,23 @@ public class BankTellerCLI {
 		printBanner("ADD ACCOUNT");
 		int choice=chooseCustomer();		
 		int accountChoice = Integer.parseInt(getUserInput("\nChoose an account type:\n\n1)Checking\n2)Savings\n\nEnter number"));
-		String accountNumber = getUserInput("\nEnter account number");  //handle case where user chooses invalid account type 
+		String accountNumber = getUserInput("\nEnter account number");   
 		if(accountChoice==1){
-			CheckingAccount newCheckingAccount = new CheckingAccount(theBank.getBankCustomers().get(choice-1), accountNumber, new DollarAmount(5000));
-			theBank.getBankCustomers().get(choice-1).addBankAccount(newCheckingAccount);
-			System.out.println("\n*** Checking account "+accountNumber+" has been created for "+theBank.getBankCustomers().get(choice-1).getName()+" ***");
+			CheckingAccount newCheckingAccount = new CheckingAccount(custChoice(choice), accountNumber, new DollarAmount(5000)); //new accounts get a free $50!
+			custChoice(choice).addBankAccount(newCheckingAccount);
+			System.out.println("\n*** Checking account "+accountNumber+" has been created for "+custChoice(choice).getName()+" ***");
 
 		}
 		else{
-			SavingsAccount newSavingsAccount = new SavingsAccount(theBank.getBankCustomers().get(choice-1), accountNumber, new DollarAmount(5000));
-			theBank.getBankCustomers().get(choice-1).addBankAccount(newSavingsAccount);
-			System.out.println("\n*** SavingsAccount "+accountNumber+" has been created for "+theBank.getBankCustomers().get(choice-1).getName()+" ***");
+			SavingsAccount newSavingsAccount = new SavingsAccount(custChoice(choice), accountNumber, new DollarAmount(5000));
+			custChoice(choice).addBankAccount(newSavingsAccount);
+			System.out.println("\n*** SavingsAccount "+accountNumber+" has been created for "+custChoice(choice).getName()+" ***");
 
 		}
+	}
+
+	private BankCustomer custChoice(int choice) {
+		return theBank.getBankCustomers().get(choice-1);
 	}
 	
 	private void deposit(){
@@ -235,12 +226,12 @@ public class BankTellerCLI {
 			if(amountToDeposit.isNegative()|| amountToDeposit.equals(new DollarAmount(0))){
 				throw new NumberFormatException();
 			}
-			theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).deposit(amountToDeposit);
+			custChoice(choice).getAccountList().get(accountChoice-1).deposit(amountToDeposit);
 			
 			System.out.println("***"+amountToDeposit.toString()+" deposited into "+
-					theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).getAccountType()+" "+
-					theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).getAccountNumber()+" ***");
-			System.out.println("*** New balance is "+theBank.getBankCustomers().get(choice-1).getAccountBalance(theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1))+" ***");		
+					custChoice(choice).getAccountList().get(accountChoice-1).getAccountType()+" "+
+					custChoice(choice).getAccountList().get(accountChoice-1).getAccountNumber()+" ***");
+			System.out.println("*** New balance is "+custChoice(choice).getAccountBalance(custChoice(choice).getAccountList().get(accountChoice-1))+" ***");		
 			control = false;
 		}
 		catch(NumberFormatException e){
@@ -248,31 +239,32 @@ public class BankTellerCLI {
 		}
 		}
 	}
-	private void withdraw(){
+
+	private void withdraw() {
 		printBanner("WITHDRAW");
 		int choice = chooseCustomer();
-		int accountChoice=chooseCustomerAccount(choice, "Choose an account");
+		int accountChoice = chooseCustomerAccount(choice, "Choose an account");
 		boolean control = true;
-		while(control){
-		try{
-			DollarAmount amountToWithdraw = new DollarAmount(Long.parseLong(getUserInput("Enter withdrawal amount")));
-			if(amountToWithdraw.isNegative() || amountToWithdraw.equals(new DollarAmount(0))){
-				throw new NumberFormatException();
+		while (control) {
+			try {
+				DollarAmount amountToWithdraw = new DollarAmount(
+						Long.parseLong(getUserInput("Enter withdrawal amount")));
+				if (amountToWithdraw.isNegative() || amountToWithdraw.equals(new DollarAmount(0))) {
+					throw new NumberFormatException();
+				}
+				custChoice(choice).getAccountList().get(accountChoice - 1).withdraw(amountToWithdraw);
+				System.out.println("***" + amountToWithdraw.toString() + " withdrawn from "
+						+ custChoice(choice).getAccountList().get(accountChoice - 1).getAccountType() + " "
+						+ custChoice(choice).getAccountList().get(accountChoice - 1).getAccountNumber() + " ***");
+				System.out.println("*** New balance is " + custChoice(choice)
+						.getAccountBalance(custChoice(choice).getAccountList().get(accountChoice - 1)) + " ***");
+				control = false;
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid Entry, Please try again");
 			}
-			theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).withdraw(amountToWithdraw);
-			System.out.println("***"+amountToWithdraw.toString()+" withdrawn from "+
-				theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).getAccountType()+" "+
-				theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1).getAccountNumber()+" ***");
-			System.out.println("*** New balance is "+theBank.getBankCustomers().get(choice-1).getAccountBalance(theBank.getBankCustomers().get(choice-1).getAccountList().get(accountChoice-1))+" ***");		
-			control = false;
-		}
-		catch(NumberFormatException e){
-			System.out.println("Invalid Entry, Please try again");
-		}
 		}
 	}
-	//deposit and withdraw:  choose an account
-	//transfer: choose a source account, choose a destination account
+	
 	private void transfer(){
 		printBanner("TRANSFER");
 		int choice = chooseCustomer();
@@ -285,15 +277,15 @@ public class BankTellerCLI {
 			if(amountToTransfer.isNegative() || amountToTransfer.equals(new DollarAmount(0))) {
 				throw new NumberFormatException();
 			}
-			theBank.getBankCustomers().get(choice-1).getAccountList().get(sourceChoice-1).transfer(theBank.getBankCustomers().get(choice-1).getAccountList().get(destinationChoice-1), amountToTransfer);
+			custChoice(choice).getAccountList().get(sourceChoice-1).transfer(custChoice(choice).getAccountList().get(destinationChoice-1), amountToTransfer);
 			System.out.println("***"+amountToTransfer.toString()+" withdrawn from "+
-				theBank.getBankCustomers().get(choice-1).getAccountList().get(sourceChoice-1).getAccountType()+" "+
-				theBank.getBankCustomers().get(choice-1).getAccountList().get(sourceChoice-1).getAccountNumber()+" ***");
-			System.out.println("*** New balance is "+theBank.getBankCustomers().get(choice-1).getAccountBalance(theBank.getBankCustomers().get(choice-1).getAccountList().get(sourceChoice-1))+" ***");	
+				custChoice(choice).getAccountList().get(sourceChoice-1).getAccountType()+" "+
+				custChoice(choice).getAccountList().get(sourceChoice-1).getAccountNumber()+" ***");
+			System.out.println("*** New balance is "+custChoice(choice).getAccountBalance(custChoice(choice).getAccountList().get(sourceChoice-1))+" ***");	
 			System.out.println("***"+amountToTransfer.toString()+" deposited into "+
-				theBank.getBankCustomers().get(choice-1).getAccountList().get(destinationChoice-1).getAccountType()+" "+
-				theBank.getBankCustomers().get(choice-1).getAccountList().get(destinationChoice-1).getAccountNumber()+" ***");
-			System.out.println("*** New balance is "+theBank.getBankCustomers().get(choice-1).getAccountBalance(theBank.getBankCustomers().get(choice-1).getAccountList().get(destinationChoice-1))+" ***");		
+				custChoice(choice).getAccountList().get(destinationChoice-1).getAccountType()+" "+
+				custChoice(choice).getAccountList().get(destinationChoice-1).getAccountNumber()+" ***");
+			System.out.println("*** New balance is "+custChoice(choice).getAccountBalance(custChoice(choice).getAccountList().get(destinationChoice-1))+" ***");		
 			control=false;
 		}
 		catch(NumberFormatException e){
@@ -324,8 +316,8 @@ public class BankTellerCLI {
 	
 	public int chooseCustomerAccount(int choice, String chooseAccountPrompt){
 		System.out.println("\n"+chooseAccountPrompt+":\n");	
-		for(int i=0; i<theBank.getBankCustomers().get(choice-1).getAccountList().size(); i++){
-			System.out.println(i+1+") "+theBank.getBankCustomers().get(choice-1).getAccountList().get(i).getAccountType()+"		"+theBank.getBankCustomers().get(choice-1).getAccountList().get(i).getAccountNumber());
+		for(int i=0; i<custChoice(choice).getAccountList().size(); i++){
+			System.out.println(i+1+") "+custChoice(choice).getAccountList().get(i).getAccountType()+"		"+custChoice(choice).getAccountList().get(i).getAccountNumber());
 		}
 		return Integer.parseInt(getUserInput("\nEnter number"));  //handle case where user chooses invalid account
 		

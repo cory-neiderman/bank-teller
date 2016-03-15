@@ -71,14 +71,14 @@ public class DollarAmountTest {
 	
 	@Test
 	public void isNegative_returns_true_for_negative_balance(){
-		DollarAmount firstAmount = new DollarAmount(-1234);
-		Assert.assertTrue(firstAmount.isNegative());
+		DollarAmount negAmount = new DollarAmount(-1234);
+		Assert.assertTrue(negAmount.isNegative());
 	}
 	
 	@Test
 	public void isNegative_returns_false_for_nonnegative_balance(){
-		DollarAmount firstAmount = new DollarAmount(1234);
-		Assert.assertFalse(firstAmount.isNegative());
+		DollarAmount positiveAmount = new DollarAmount(1234);
+		Assert.assertFalse(positiveAmount.isNegative());
 		DollarAmount zeroAmount = new DollarAmount(0);
 		Assert.assertFalse(zeroAmount.isNegative());
 	}
@@ -136,6 +136,10 @@ public class DollarAmountTest {
 		DollarAmount firstAmount = new DollarAmount(1234);
 		int firstAmountInt = 1234;
 		Assert.assertEquals(firstAmountInt, firstAmount.hashCode());
+		
+		DollarAmount secondAmount = new DollarAmount(50000);
+		int secondAmountInt = 50000;
+		Assert.assertEquals(secondAmountInt, secondAmount.hashCode());
 	}
 	
 }
